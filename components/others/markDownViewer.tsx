@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
+import remarkGfm from "remark-gfm";
+
 import {
   CustomH2,
   code,
@@ -15,6 +15,7 @@ import {
   customUL,
   strong,
   customLink,
+  customTable,
 } from "@/utils/markDownComp";
 
 interface Props {
@@ -50,6 +51,7 @@ export default function MarkdownViewer({ path }: Props) {
     <div className="prose dark:prose-invert max-w-none mt-8">
       <ReactMarkdown
         children={markdown}
+        remarkPlugins={[remarkGfm]}
         components={{
           h2: CustomH2,
           h3: customH3,
@@ -60,6 +62,7 @@ export default function MarkdownViewer({ path }: Props) {
           td: customTD,
           strong: strong,
           code: code,
+          table: customTable,
           a: customLink,
         }}
       />

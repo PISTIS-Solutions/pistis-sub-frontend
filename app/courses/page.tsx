@@ -65,7 +65,7 @@ export default function CoursesPage() {
           Pistis TechHub
         </p>
       </div>
-      <h1 className="md:text-3xl text-base sm:text-2xl font-semibold mt-8 mb-4">
+      <h1 onClick={()=>fetchContents("/")} className="md:text-3xl cursor-pointer text-base sm:text-2xl font-semibold mt-8 mb-4">
         📁 Courses/Projects Explorer
       </h1>
 
@@ -130,7 +130,7 @@ export default function CoursesPage() {
 
       {selectedMarkdownPath && (
         <>
-          <h2 className="text-2xl mt-10 font-semibold">
+          <h2 className="md:text-2xl text-sm sm:text-base mt-10 font-semibold">
             📝 Preview: {selectedMarkdownPath}
           </h2>
           <MarkdownViewer path={selectedMarkdownPath} />
@@ -142,11 +142,11 @@ export default function CoursesPage() {
         <p className="text-sm sm:text-base">
           After project completion, send project link to{" "}
           <a
-            href="admin@pistis.solutions"
+            href="thepitistechhublearning@gmail.com"
             className="cursor-pointer text-main italic"
             target="_blank"
           >
-            admin@pistis.solutions
+            thepitistechhublearning@gmail.com
           </a>
         </p>
       </div>
