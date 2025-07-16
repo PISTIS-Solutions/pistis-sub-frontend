@@ -1,8 +1,9 @@
 import { Montserrat } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import Favicon from "@/public/favicon.ico"
+import Favicon from "@/public/favicon.ico";
 import "./globals.css";
 import { Metadata } from "next";
+import Providers from "@/components/others/progressBar";
 
 const montserrat = Montserrat({ subsets: ["latin"], display: "auto" });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className} antialiased`}>
-        <main>{children}</main>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

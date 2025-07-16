@@ -41,7 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
+
   --color-main: var(--main);
   --color-sub: var(--sub);
 }
@@ -125,4 +125,18 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overflow: -moz-scrollbars-none;
+}
+
+body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
