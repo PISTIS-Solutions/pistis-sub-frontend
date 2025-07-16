@@ -140,6 +140,7 @@ export default function CoursesPage() {
         </>
       )}
 
+      <hr className="my-5" />
       <div className="flex w-full items-center gap-2 mt-5 ">
         <IoIosWarning className="text-main flex-none w-5 h-5" />
         <div className="text-xs sm:text-sm">
