@@ -10,7 +10,7 @@ export default function middleware(req: NextRequest) {
     !isAuthenticated &&
     isProtectedRoute(req.nextUrl.pathname, protectedRoutes)
   ) {
-    const absoluteURL = new URL("/", req.nextUrl.origin);
+    const absoluteURL = new URL("/sign-in", req.nextUrl.origin);
     return NextResponse.redirect(absoluteURL);
   }
 

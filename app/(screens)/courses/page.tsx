@@ -65,7 +65,10 @@ export default function CoursesPage() {
           Pistis TechHub
         </p>
       </div>
-      <h1 onClick={()=>fetchContents("/")} className="md:text-3xl cursor-pointer text-base sm:text-2xl font-semibold mt-8 mb-4">
+      <h1
+        onClick={() => fetchContents("/")}
+        className="md:text-3xl cursor-pointer text-base sm:text-2xl font-semibold mt-8 mb-4"
+      >
         📁 Courses/Projects Explorer
       </h1>
 
@@ -137,19 +140,32 @@ export default function CoursesPage() {
         </>
       )}
 
-      <div className="flex items-center gap-2 mt-5">
-        <IoIosWarning className="text-main" />
-        <p className="text-sm sm:text-base">
-          After project completion, send project link to{" "}
+      <div className="flex w-full items-center gap-2 mt-5 ">
+        <IoIosWarning className="text-main flex-none w-5 h-5" />
+        <div className="text-xs sm:text-sm">
+          Note: Upon completion of every Projects, you're to send the project
+          document link or your github repository link to this email address{" "}
           <a
             href="thepitistechhublearning@gmail.com"
             className="cursor-pointer text-main italic"
             target="_blank"
           >
             thepitistechhublearning@gmail.com
-          </a>
-        </p>
+          </a>{" "}
+          using this format; <br />
+        </div>
       </div>
+      <span className="text-xs sm:text-sm">
+        <p>
+          <span className="text-main font-semibold">Subject: </span>(Course
+          Title) e.g Onboarding Project.
+        </p>
+        <p>
+          <span className="text-main font-semibold">Body:</span> Paste or Attach
+          the project link, then write few comments about the project you just
+          completed.
+        </p>
+      </span>
 
       <div className="w-full flex justify-end">
         <button
