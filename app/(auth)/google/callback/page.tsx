@@ -10,8 +10,8 @@ import Fulllogo from "@/public/assets/auth/full-logo.png";
 import email from "@/public/assets/auth/email.png";
 import { Loader } from "lucide-react";
 
-import bg from "@/public/signIn/assets/sign-in-bg.png";
-import kim from "@/public/signIn/assets/kim.png";
+import bg from "@/public/assets/signIn/sign-in-bg.png";
+import kim from "@/public/assets/signIn/kim.png";
 import { toast } from "sonner";
 
 const GoogleAuthSignUp = () => {
