@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useRouter } from "next-nprogress-bar";
 import { useEffect, useRef, useState } from "react";
@@ -8,9 +10,9 @@ import { urls } from "@/utils/endpoint";
 import { usePlanStore } from "@/store/plan-store";
 import { toast } from "sonner";
 import refreshTokens from "@/utils/refreshToken";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 
-const data = [
+const benefits = [
   "4 one-on-one mentorship sessions per month",
   "6 months of unlimited access",
   "15 courses",
@@ -20,68 +22,24 @@ const data = [
 
 const IntermediateCardModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const { plans } = usePlanStore();
-  const modal = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const [selectedPlan, setSelectedPlan] = useState<{
-    price: number;
-    duration: string;
-  }>({
-    price: 400000,
+  const [selectedPlan, setSelectedPlan] = useState({
+    basePrice: 400000,
     duration: "6months",
+    discount: 0.2,
   });
 
-  const toggleModal = () => setIsOpen(!isOpen);
-
   const [paying, setPaying] = useState(false);
-  const handleClick = async () => {
-    const userId = Cookies.get("userId");
-    const plan = plans.find((itm) => itm.name.includes("INTERMEDIATE"));
-    if (!plan) {
-      toast.error("Intermediate plan not found.");
-      return;
-    }
-
-    const data = {
-      user: userId,
-      plan: plan?.id,
-      duration: selectedPlan.duration,
-    };
-
-    try {
-      setPaying(true);
-      const accessToken = Cookies.get("authToken");
-      const response = await axios.post(urls.makeIntermediatePayment, data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response, "intermediate payment");
-      if (response.status === 200) {
-        window.open(response.data.payment_data.authorization_url, "_blank");
-        toast.success(response?.data?.message);
-        toggleModal();
-      } else {
-        toast.error("Payment Failed!");
-      }
-    } catch (error: any) {
-      if (error.response && error.response.status === 401 && !paying) {
-        await refreshTokens();
-        setTimeout(handleClick, 100);
-        return;
-      } else if (error?.message === "Network Error") {
-        toast.error("Check your network!");
-      } else {
-        toast.error(`Payment Failed; ${error.response.data.user.email?.[0]}`);
-      }
-    } finally {
-      setPaying(false);
-    }
-  };
 
   const handleOutsideClick = (e: MouseEvent) => {
-    if (isOpen && modal.current && !modal.current.contains(e.target as Node)) {
+    if (
+      isOpen &&
+      modalRef.current &&
+      !modalRef.current.contains(e.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -89,150 +47,165 @@ const IntermediateCardModal = () => {
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isOpen]);
+
+  const handleClick = async () => {
+    const userId = Cookies.get("userId");
+    const plan = plans.find((p) => p.name.includes("INTERMEDIATE"));
+    if (!plan) return toast.error("Intermediate plan not found.");
+
+    try {
+      setPaying(true);
+      const accessToken = Cookies.get("authToken");
+
+      const response = await axios.post(
+        urls.makeIntermediatePayment,
+        { user: userId, plan: plan.id, duration: selectedPlan.duration },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+
+      if (response.status === 200) {
+        window.open(response.data.payment_data.authorization_url, "_blank");
+        toast.success(response.data.message);
+        setIsOpen(false);
+      } else {
+        toast.error("Payment Failed!");
+      }
+    } catch (err: any) {
+      if (err?.response?.status === 401 && !paying) {
+        await refreshTokens();
+        setTimeout(handleClick, 100);
+      } else if (err?.message === "Network Error") {
+        toast.error("Check your network!");
+      } else {
+        toast.error(
+          `Payment Failed: ${
+            err.response?.data?.user?.email?.[0] || "Unknown error"
+          }`
+        );
+      }
+    } finally {
+      setPaying(false);
+    }
+  };
 
   return (
     <>
       <button
-        className="bg-main rounded-[10px] font-semibold mt-6 mb-2 h-[52px] flex items-center justify-center text-white"
+        className="bg-main hover:bg-main/90 transition rounded-[10px] font-semibold mt-6 mb-2 h-[52px] w-full flex items-center justify-center text-white"
         onClick={() => setIsOpen(true)}
       >
         Select Plan
       </button>
 
-      <div
-        className={
-          "fixed inset-0  bg-white bg-opacity-30 transition-all ease-in-out duration-300 flex justify-center items-center z-50 " +
-          (isOpen
-            ? "opacity-100 backdrop-blur-sm"
-            : "opacity-0 backdrop-blur-none pointer-events-none")
-        }
-      >
-        <div
-          className={
-            "shadow-[0px_0px_45px_0px_#0000004D] bg-white  rounded-[20px] flex items-center gap-y-3 sm:gap-y-6 w-[90vw] md:max-w-[692px] h-[95vh] overflow-y-scroll flex-col py-2 sm:py-10 " +
-            (isOpen ? "translate-y-0 scale-100" : "translate-y-full scale-50")
-          }
-          ref={modal}
-        >
-          <div className="flex flex-col items-center justify-center w-full">
-            <Image src={logo} alt="Pistis logo" />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300">
+          <div
+            ref={modalRef}
+            className="bg-white overflow-y-scroll h-[90vh] w-[90vw] max-w-xl rounded-2xl p-6 sm:p-10 shadow-xl relative animate-in slide-in-from-bottom"
+          >
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-gray-100 transition"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
 
-            <span className=" max-w-full sm:max-w-[68%] text-center w-full">
-              <h1 className="text-main text-xl sm:text-[32px] font-bold">
+            <div className="flex flex-col items-center gap-4">
+              <Image src={logo} alt="Pistis Logo" className="w-16 h-16" />
+              <h2 className="text-2xl sm:text-3xl font-bold text-main text-center">
                 Intermediate Plan
-              </h1>
-              <p className="text-[#828282] sm:text-base text-sm">
-                Before proceeding to payment you are expected to have:
+              </h2>
+              <p className="text-sm text-center text-gray-600 max-w-md">
+                Before proceeding to payment, ensure you meet the following:
               </p>
-            </span>
-          </div>
 
-          <div className="w-[90%] sm:w-[80%] md:w-[532px]">
-            <ul className="list-disc list-inside text-[#2E2E2E] sm:text-base text-sm mb-10">
-              {data.map((itm) => (
-                <li key={itm}>{itm}</li>
-              ))}
-            </ul>
+              <ul className="list-disc list-inside text-sm sm:text-base text-gray-700 text-left w-full sm:px-6 mt-4 space-y-2">
+                {benefits.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
 
-            <hr className="mt-5" />
+              <div className="w-full mt-6">
+                <p className="text-sm font-medium text-gray-700 mb-2">
+                  Select a payment schedule:
+                </p>
 
-            <div className="my-5">
-              <p className="font-normal sm:text-left text-center text-xs sm:text-sm font-sfProDisplay text-[#666666]">
-                Select a payment schedule:
-              </p>
-              <div className="flex items-center justify-between gap-2 flex-col mt-2.5">
-                <div
-                  className={`w-full border cursor-pointer h-auto rounded-[8px] p-2 sm:p-1.5 transition duration-200 ${
-                    selectedPlan.duration === "6months"
-                      ? "border-sub"
-                      : "border-[#DADADA]"
-                  }`}
-                  onClick={() =>
-                    setSelectedPlan({ price: 400000, duration: "6months" })
-                  }
-                >
-                  <h1
-                    className={`font-medium text-2xl sm:text-3xl flex items-center gap-1.5 pb-3 transition duration-200 ${
-                      selectedPlan.duration === "6months"
-                        ? "text-main"
-                        : "text-[#DADADA]"
-                    }`}
-                  >
-                    ₦400,000{" "}
-                    <span className="font-normal text-sm text-[#484848]">
-                      + (VAT 4.6%){" "}
-                      <span className="text-medium text-[#484848]">
-                        ₦6,328.92
-                      </span>
-                    </span>
-                  </h1>
-                  <p className="font-normal text-xs sm:text-sm font-sfProDisplay text-[#666666]">
-                    One-time payment{" "}
-                    <span className="text-sub">(Save up to 12%)</span>
-                  </p>
-                </div>
-                <div
-                  className={`w-full border cursor-pointer h-auto rounded-[8px] p-2 sm:p-3 transition duration-200 ${
-                    selectedPlan.duration === "30days"
-                      ? "border-sub"
-                      : "border-[#DADADA]"
-                  }`}
-                  onClick={() =>
-                    setSelectedPlan({ price: 73000, duration: "30days" })
-                  }
-                >
-                  <h1
-                    className={`font-medium text-2xl flex items-center gap-1.5 sm:text-3xl pb-3 transition duration-200 ${
-                      selectedPlan.duration === "30days"
-                        ? "text-main"
-                        : "text-[#DADADA]"
-                    }`}
-                  >
-                    ₦73,000{" "}
-                    <span className="font-normal text-sm text-[#484848]">
-                      + (VAT 4.6%){" "}
-                      <span className="text-medium text-[#484848]">
-                        ₦4,228.92
-                      </span>
-                    </span>
-                  </h1>
-                  <p className="font-normal text-xs sm:text-sm font-sfProDisplay text-[#666666]">
-                    Billed Monthly for 6 Months
-                  </p>
+                <div className="space-y-4">
+                  {[
+                    { basePrice: 400000, duration: "6months", discount: 0.2 },
+                    { basePrice: 73000, duration: "30days", discount: 0 },
+                  ].map((option) => {
+                    const isActive = selectedPlan.duration === option.duration;
+
+                    const discountedPrice =
+                      option.basePrice * (1 - option.discount);
+                    const vat = discountedPrice * 0.075;
+
+                    return (
+                      <div
+                        key={option.duration}
+                        onClick={() => setSelectedPlan(option)}
+                        className={`w-full p-4 border rounded-xl cursor-pointer transition ${
+                          isActive ? "border-sub bg-sub/10" : "border-gray-200"
+                        }`}
+                      >
+                        <h3
+                          className={`text-xl font-semibold ${
+                            isActive ? "text-main" : "text-gray-500"
+                          }`}
+                        >
+                          ₦{option.basePrice.toLocaleString()}
+                          <span className="font-normal text-sm text-[#484848]">
+                            {" "}
+                            + (VAT 7.5%){" "}
+                            <span className="text-medium text-[#484848]">
+                              ₦
+                              {vat.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                            </span>
+                          </span>
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {option.duration === "6months"
+                            ? "One-time payment (Save 20%)"
+                            : "Billed Monthly for 6 Months"}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            </div>
 
-            <button
-              disabled={paying}
-              className="bg-main disabled:bg-main/20 disabled:cursor-not-allowed h-[50px] flex items-center justify-center w-full font-sfProDisplay text-white rounded-lg font-medium mt-10"
-              onClick={handleClick}
-            >
-              {paying ? (
-                <span className="flex items-center justify-center">
-                  <Loader2 className="text-white animate-spin" />
-                </span>
-              ) : (
-                <p>
-                  {" "}
-                  Proceed to Payment{" "}
-                  <span className="font-semibold text-sub text-lg">
-                    ₦{selectedPlan.price}
-                  </span>
-                </p>
-              )}
-            </button>
+              <button
+                onClick={handleClick}
+                disabled={paying}
+                className="mt-8 w-full py-3 bg-main hover:bg-main/90 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex md:flex-row flex-col items-center justify-center"
+              >
+                {paying ? (
+                  <Loader2 className="animate-spin h-5 w-5 text-white" />
+                ) : (
+                  <>
+                    Proceed to Payment{" "}
+                    <span className="ml-2 font-bold text-sub">
+                      ₦
+                      {Math.round(
+                        selectedPlan.basePrice *
+                          (1 - selectedPlan.discount || 0) *
+                          1.075
+                      ).toLocaleString()}
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
