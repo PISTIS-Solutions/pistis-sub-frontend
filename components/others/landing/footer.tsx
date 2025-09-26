@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-import whiteLogo from "@/public/assets/landing/whiteLogo.png";
+import whiteLogo from "@/src/assets/landing/whiteLogo.png";
 
 import { FaXTwitter } from "react-icons/fa6";
 import { LuFacebook } from "react-icons/lu";

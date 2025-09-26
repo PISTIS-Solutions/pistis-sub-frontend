@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import pistisLogo from "@/public/pistis_logo.png";
+import pistisLogo from "@/src/pistis_logo.png";
 import { IoIosWarning } from "react-icons/io";
 
 interface GitHubItem {
@@ -29,10 +29,10 @@ export default function CoursesPage() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://api.github.com/repos/${process.env.NEXT_PUBLIC_GITHUB_OWNER}/${process.env.NEXT_PUBLIC_GITHUB_REPO}/contents/${folder}?ref=${process.env.NEXT_PUBLIC_GITHUB_BRANCH}`,
+        `https://api.github.com/repos/${process.env.NEXT_src_GITHUB_OWNER}/${process.env.NEXT_src_GITHUB_REPO}/contents/${folder}?ref=${process.env.NEXT_src_GITHUB_BRANCH}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+            Authorization: `Bearer ${process.env.NEXT_src_GITHUB_TOKEN}`,
             Accept: "application/vnd.github.v3+json",
           },
         }

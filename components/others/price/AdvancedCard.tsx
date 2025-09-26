@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import infinity from "@/public/assets/payment/infinity.svg";
-import redStash from "@/public/assets/payment/redStash.svg";
+import infinity from "@/src/assets/payment/infinity.svg";
+import redStash from "@/src/assets/payment/redStash.svg";
 import Image from "next/image";
 
 const AdvanceCard = () => {

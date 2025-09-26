@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { motion } from "framer-motion";
 
-import aboutBack from "@/public/assets/landing/about/aboutBack.png";
-import aboutImg from "@/public/assets/landing/about/abtImage.png";
+import aboutBack from "@/src/assets/landing/about/aboutBack.png";
+import aboutImg from "@/src/assets/landing/about/abtImage.png";
 import NavigationBar from "@/components/others/landing/nav";
 import Benefits from "@/components/others/landing/benefits";
 import Slides from "@/components/others/landing/slides";

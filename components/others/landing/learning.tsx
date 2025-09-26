@@ -4,9 +4,9 @@ import Image from "next/image";
 
 import { motion } from "framer-motion";
 
-import cube from "@/public/assets/landing/cube.png";
-import print from "@/public/assets/landing/print.png";
-import game from "@/public/assets/landing/game.png";
+import cube from "@/src/assets/landing/cube.png";
+import print from "@/src/assets/landing/print.png";
+import game from "@/src/assets/landing/game.png";
 
 const Learning = () => {
   const learnData = [

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import doubleTick from "@/public/assets/payment/doubletick.svg";
+import doubleTick from "@/src/assets/payment/doubletick.svg";
 import Image from "next/image";
 import IntermediateCardModal from "../modal/plan/IntermediateCardModal";
 

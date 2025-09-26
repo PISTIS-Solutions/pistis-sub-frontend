@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import logo from "@/public/pistis_logo.png";
+import logo from "@/src/pistis_logo.png";
 import Link from "next/link";
 
-import Fulllogo from "@/public/assets/auth/full-logo.png";
+import Fulllogo from "@/src/assets/auth/full-logo.png";
 import { useRouter } from "next-nprogress-bar";
 import axios from "axios";
 import { Loader2 } from "lucide-react";

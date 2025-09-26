@@ -2,8 +2,8 @@
 import React from "react";
 
 
-import doubleTick from "@/public/assets/payment/doubletick.svg";
-import bolt from "@/public/assets/payment/roundBolt.svg";
+import doubleTick from "@/src/assets/payment/doubletick.svg";
+import bolt from "@/src/assets/payment/roundBolt.svg";
 import Image from "next/image";
 import BeginnerCardModal from "../modal/plan/BeginnerCardModal";
 

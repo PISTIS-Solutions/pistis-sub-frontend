@@ -3,12 +3,12 @@
 import React from "react";
 import Image from "next/image";
 
-import logo from "@/public/pistis_logo.png";
-import envelope from "@/public/assets/auth/enve.webp";
+import logo from "@/src/pistis_logo.png";
+import envelope from "@/src/assets/auth/enve.webp";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next-nprogress-bar";
 
-import Fulllogo from "@/public/assets/auth/full-logo.png";
+import Fulllogo from "@/src/assets/auth/full-logo.png";
 
 const VerifySuccess = () => {
   const router = useRouter();

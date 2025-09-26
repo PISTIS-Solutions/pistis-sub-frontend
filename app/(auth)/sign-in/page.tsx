@@ -4,14 +4,14 @@ import { Eye, EyeOff, KeyRound, Loader2, Mail } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import mainLogo from "@/public/mainLogo.png";
+import mainLogo from "@/src/mainLogo.png";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { baseURL, urls } from "@/utils/endpoint";
-import bg from "@/public/assets/signIn/sign-in-bg.png";
-import kim from "@/public/assets/signIn/kim.png";
-import google from "@/public/assets/auth/google.svg";
+import bg from "@/src/assets/signIn/sign-in-bg.png";
+import kim from "@/src/assets/signIn/kim.png";
+import google from "@/src/assets/auth/google.svg";
 import Link from "next/link";
 
 export default function LoginPage() {

@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import logo from "@/public/pistis_logo.png";
+import logo from "@/src/pistis_logo.png";
 import { useParams } from "next/navigation";
 
 import axios from "axios";
 import Link from "next/link";
-import Fulllogo from "@/public/assets/auth/full-logo.png";
-import email from "@/public/assets/auth/email.png";
+import Fulllogo from "@/src/assets/auth/full-logo.png";
+import email from "@/src/assets/auth/email.png";
 import { urls } from "@/utils/endpoint";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";

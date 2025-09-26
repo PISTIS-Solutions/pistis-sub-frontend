@@ -1,6 +1,6 @@
 import { Montserrat } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import Favicon from "@/public/favicon.ico";
+import Favicon from "@/src/favicon.ico";
 import "./globals.css";
 import { Metadata } from "next";
 import Providers from "@/components/others/progressBar";

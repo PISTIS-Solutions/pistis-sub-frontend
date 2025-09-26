@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import logo from "@/public/pistis_logo.png";
+import logo from "@/src/pistis_logo.png";
 import {
   Form,
   FormControl,

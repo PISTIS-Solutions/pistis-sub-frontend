@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import landingBck from "@/public/assets/landing/landingBck.png";
-import boy from "@/public/assets/landing/boy.png";
-import guy from "@/public/assets/landing/guy.png";
+import landingBck from "@/src/assets/landing/landingBck.png";
+import boy from "@/src/assets/landing/boy.png";
+import guy from "@/src/assets/landing/guy.png";
 
 import { MdOutlineLaunch } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";

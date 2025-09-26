@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
-import mainLogo from "@/public/mainLogo.png"
+import mainLogo from "@/src/mainLogo.png"
 import { usePathname } from "next/navigation";
 import { SlClose } from "react-icons/sl";
 import { motion } from "framer-motion";

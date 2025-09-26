@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next-nprogress-bar";
 import { useEffect, useRef, useState } from "react";
-import logo from "@/public/pistis_logo.png";
+import logo from "@/src/pistis_logo.png";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { urls } from "@/utils/endpoint";

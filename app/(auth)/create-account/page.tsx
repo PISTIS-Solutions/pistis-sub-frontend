@@ -4,11 +4,11 @@ import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next-nprogress-bar";
 
-import logo from "@/public/pistis_logo.png";
+import logo from "@/src/pistis_logo.png";
 import { Mail, KeyRound, Eye, EyeOff, Loader2, Info } from "lucide-react";
 import Link from "next/link";
 
-import google from "@/public/assets/auth/google.svg";
+import google from "@/src/assets/auth/google.svg";
 
 import axios from "axios";
 import useFormStore from "@/store/create-account";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import kelsey from "@/public/assets/auth/kelsey.png"
-import bg from "@/public/assets/auth/forgot-bg.png";
+import kelsey from "@/src/assets/auth/kelsey.png"
+import bg from "@/src/assets/auth/forgot-bg.png";
 
 export const metadata: Metadata = {
   title: "Create account",

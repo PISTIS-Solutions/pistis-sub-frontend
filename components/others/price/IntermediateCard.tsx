@@ -1,8 +1,8 @@
 "use client";
 import { Info } from "lucide-react";
 import React from "react";
-import intermediateIcon from "@/public/assets/payment/bolt.png";
-import stash from "@/public/assets/payment/stash.svg";
+import intermediateIcon from "@/src/assets/payment/bolt.png";
+import stash from "@/src/assets/payment/stash.svg";
 import Image from "next/image";
 import IntermediateCardModal from "../modal/plan/IntermediateCardModal";
 
