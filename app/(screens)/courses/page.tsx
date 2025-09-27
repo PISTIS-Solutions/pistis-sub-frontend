@@ -29,10 +29,10 @@ export default function CoursesPage() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://api.github.com/repos/${process.env.NEXT_src_GITHUB_OWNER}/${process.env.NEXT_src_GITHUB_REPO}/contents/${folder}?ref=${process.env.NEXT_src_GITHUB_BRANCH}`,
+        `https://api.github.com/repos/${process.env.NEXT_PUBLIC_GITHUB_OWNER}/${process.env.NEXT_PUBLIC_GITHUB_REPO}/contents/${folder}?ref=${process.env.NEXT_PUBLIC_GITHUB_BRANCH}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_src_GITHUB_TOKEN}`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
             Accept: "application/vnd.github.v3+json",
           },
         }
